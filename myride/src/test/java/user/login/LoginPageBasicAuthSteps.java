@@ -1,4 +1,4 @@
-package user;
+package user.login;
 
 import core.DriverManager;
 import core.TestUtils;

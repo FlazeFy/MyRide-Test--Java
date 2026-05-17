@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPageBasicAuth extends BasePage {
+    // Selector
     @FindBy(xpath = "//h2")
     private WebElement sectionTitle;
 
@@ -24,6 +25,7 @@ public class LoginPageBasicAuth extends BasePage {
         super(driver);
     }
 
+    // Verify
     public boolean verifySectionTitle(String title) {
         waitForElementToBeVisible(sectionTitle);
         return sectionTitle.getText().equals(title);
@@ -38,6 +40,13 @@ public class LoginPageBasicAuth extends BasePage {
         return submitButton.getText().equals(text);
     }
 
+    public boolean verifyRedirectToDashboard() {
+        waitForUrlContains("/dashboard");
+
+        return driver.getCurrentUrl().contains("/dashboard");
+    }
+
+    // User Action
     public void inputEmail(String email) {
         waitForElementToBeVisible(inputUsername);
         inputUsername.clear();
@@ -58,11 +67,5 @@ public class LoginPageBasicAuth extends BasePage {
         inputEmail(email);
         inputPassword(password);
         clickSubmitButton();
-    }
-
-    public boolean verifyRedirectToDashboard() {
-        waitForUrlContains("/dashboard");
-
-        return driver.getCurrentUrl().contains("/dashboard");
     }
 }

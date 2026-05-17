@@ -6,4 +6,9 @@
             <class name="runners.TestRunner"/>
         </classes>
     </test>
+    <test name="API Integration Test : Stats Module">
+        <classes>
+            <class name="api.stats.GetSummary"/>
+        </classes>
+    </test>
 </suite>
