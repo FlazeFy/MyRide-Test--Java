@@ -9,6 +9,7 @@
     <test name="API Integration Test : Stats Module">
         <classes>
             <class name="api.stats.GetSummary"/>
+            <class name="api.stats.GetTripPartner"/>
         </classes>
     </test>
     <test name="API Integration Test : History Module">

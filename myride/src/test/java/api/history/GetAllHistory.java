@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
+import static core.TestUtils.templateResponseGet;
 import static io.restassured.RestAssured.given;
 
 public class GetAllHistory extends BaseApiTest {
@@ -46,20 +47,7 @@ public class GetAllHistory extends BaseApiTest {
         String endpoint = "/api/v1/history";
         String token = AuthUtils.integrationLoginAPI("flazen.edu", "nopass123");
 
-        Response response = given()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + token)
-                .when()
-                .get(endpoint)
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
-
-        System.out.println("==== GET : All History ====");
-        System.out.println("Status Code : " + response.getStatusCode());
-        System.out.println("Response : ");
-        System.out.println(response.asPrettyString());
+        Response response = templateResponseGet(endpoint, 200, "All History", token);
 
         validateValidResponse(response);
 
@@ -124,15 +112,7 @@ public class GetAllHistory extends BaseApiTest {
         String endpoint = "/api/v1/history";
         String token = AuthUtils.integrationLoginAPI("testerempty", "nopass123");
 
-        Response response = given()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + token)
-                .when()
-                .get(endpoint)
-                .then()
-                .statusCode(404)
-                .extract()
-                .response();
+        Response response = templateResponseGet(endpoint, 404, "All History", token);
 
         JsonPath jsonPath = response.jsonPath();
 
@@ -146,15 +126,7 @@ public class GetAllHistory extends BaseApiTest {
     public void userCantSeeAllHistoryWithInvalidAuth() {
         String endpoint = "/api/v1/history";
 
-        Response response = given()
-                .contentType("application/json")
-                .header("Accept", "application/json")
-                .when()
-                .get(endpoint)
-                .then()
-                .statusCode(401)
-                .extract()
-                .response();
+        Response response = templateResponseGet(endpoint, 401, "All History", null);
 
         JsonPath jsonPath = response.jsonPath();
 

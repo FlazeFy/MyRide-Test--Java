@@ -218,4 +218,35 @@ public class TestUtils {
             }
         }
     }
+
+    public static Response templateResponseGet(String endpoint, int expectedStatusCode, String endpointName, String token) {
+        String contentType = "application/json";
+        Response response;
+
+        if (token != null) {
+            response = given()
+                .contentType(contentType)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get(endpoint)
+                .then()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        } else {
+            response = given()
+                .contentType(contentType)
+                .when()
+                .get(endpoint)
+                .then()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        }
+
+        System.out.println("==== GET : "+ endpointName +" ====");
+        System.out.println("Status Code : " + response.getStatusCode());
+        System.out.println("Response : ");
+        System.out.println(response.asPrettyString());
+
+        return response;
+    }
 }

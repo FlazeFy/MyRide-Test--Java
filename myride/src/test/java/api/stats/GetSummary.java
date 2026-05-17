@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.Map;
+
+import static core.TestUtils.templateResponseGet;
 import static io.restassured.RestAssured.given;
 
 public class GetSummary extends BaseApiTest {
@@ -16,19 +18,7 @@ public class GetSummary extends BaseApiTest {
     public void successGetSummaryWithValidData() {
         String endpoint = "/api/v1/stats/summary";
 
-        Response response = given()
-                .contentType("application/json")
-                .when()
-                .get(endpoint)
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
-
-        System.out.println("==== GET : Summary ====");
-        System.out.println("Status Code : " + response.getStatusCode());
-        System.out.println("Response : ");
-        System.out.println(response.asPrettyString());
+        Response response = templateResponseGet(endpoint, 200, "Summary", null);
 
         JsonPath jsonPath = response.jsonPath();
 
