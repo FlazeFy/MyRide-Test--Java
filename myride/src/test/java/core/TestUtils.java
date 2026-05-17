@@ -1,5 +1,6 @@
 package core;
 
+import io.restassured.response.Response;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -12,8 +13,11 @@ import java.io.IOException;
 
 import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 
 public class TestUtils {
 
@@ -128,6 +132,88 @@ public class TestUtils {
 
                     default:
                         Assert.fail("Unsupported data type: " + dataType);
+                }
+            }
+        }
+    }
+
+    public static void templatePagination(String url, int max, String token) {
+        List<Integer> pages = new ArrayList<>();
+
+        if (max <= 4) {
+            // Hit all pages
+            for (int i = 1; i <= max; i++) {
+                pages.add(i);
+            }
+        } else {
+            // Hit page 2, middle, last
+            int middle = (int) Math.ceil((double) max / 2);
+
+            pages = List.of(2, middle, max);
+        }
+
+        pages = pages.stream().distinct().toList();
+        for (Integer page : pages) {
+            Response response;
+            if (token != null) {
+                response = given()
+                        .contentType("application/json")
+                        .header("Authorization", "Bearer " + token)
+                        .queryParam("page", page)
+                        .when()
+                        .get(url)
+                        .then()
+                        .statusCode(200)
+                        .extract()
+                        .response();
+
+            } else {
+                response = given()
+                        .contentType("application/json")
+                        .queryParam("page", page)
+                        .when()
+                        .get(url)
+                        .then()
+                        .statusCode(200)
+                        .extract()
+                        .response();
+            }
+
+            Assert.assertEquals(response.getStatusCode(), 200);
+        }
+    }
+
+    public static void validateDateTime(Object data, List<Map<String, Object>> obj) {
+        List<Map<String, Object>> dataArray;
+
+        if (data instanceof List) {
+            dataArray = (List<Map<String, Object>>) data;
+        } else {
+            dataArray = List.of((Map<String, Object>) data);
+        }
+
+        for (Map<String, Object> item : dataArray) {
+            for (Map<String, Object> field : obj) {
+                String colName = field.get("column_name").toString();
+                String dateType = field.get("date_type").toString();
+                boolean nullable = (boolean) field.get("nullable");
+
+                Object value = item.get(colName);
+
+                if (!nullable || value != null) {
+                    Assert.assertNotNull(value);
+                    String dateValue = value.toString();
+
+                    if (dateType.equals("datetime")) {
+                        Assert.assertTrue(dateValue.matches(
+                                "^(?:\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z?|\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})$"),
+                                colName + " must be a valid datetime (ISO 8601 or SQL format)"
+                        );
+                    } else if (dateType.equals("time")) {
+                        Assert.assertTrue(dateValue.matches("^\\d{2}:\\d{2}:\\d{2}$"), colName + " must be a valid time");
+                    } else if (dateType.equals("date")) {
+                        Assert.assertTrue(dateValue.matches("^\\d{4}-\\d{2}-\\d{2}$"), colName + " must be a valid date");
+                    }
                 }
             }
         }

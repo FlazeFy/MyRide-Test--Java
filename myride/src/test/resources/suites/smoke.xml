@@ -11,4 +11,9 @@
             <class name="api.stats.GetSummary"/>
         </classes>
     </test>
+    <test name="API Integration Test : History Module">
+        <classes>
+            <class name="api.history.GetAllHistory"/>
+        </classes>
+    </test>
 </suite>
