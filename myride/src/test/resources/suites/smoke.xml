@@ -18,4 +18,9 @@
             <class name="api.history.GetAllHistory"/>
         </classes>
     </test>
+    <test name="API Integration Test : Question Module">
+        <classes>
+            <class name="api.question.GetShowingFAQ"/>
+        </classes>
+    </test>
 </suite>

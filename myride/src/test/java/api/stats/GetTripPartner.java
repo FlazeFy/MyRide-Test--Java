@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import static core.TestUtils.templateResponseGet;
-import static io.restassured.RestAssured.given;
 
 public class GetTripPartner {
     @Test(description = "TC-INT-ST-006 : User Can See List Of Partner Trip")
