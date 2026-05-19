@@ -10,12 +10,13 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
+import static core.TestUtils.isContainedInList;
 import static core.TestUtils.templateResponseGet;
 
 public class GetTotalTripMonthlyByYearAndVehicleId {
     @Test(description = "TC-INT-ST-010 : User Can See Total Trip Monthly By Year And Vehicle Id With Valid Year Vehicle And Valid Data")
     public void userCanSeeTotalTripMonthlyByYearAndVehicleIdWithValidYearVehicleAndValidData() {
-        String vehicleId = "2d98f524-de02-11ed-b5ea-0242ac120002";
+        String vehicleId = "7d53371a-e363-2ad3-25fe-180dae88c062";
         int year = 2026;
         String endpoint = "/api/v1/stats/total/trip/monthly/"+year+"/"+vehicleId;
         String token = AuthUtils.integrationLoginAPI("flazen.edu", "nopass123");
@@ -43,7 +44,7 @@ public class GetTotalTripMonthlyByYearAndVehicleId {
 
     @Test(description = "TC-INT-ST-011 : User Cant See Total Trip Monthly By Year And Vehicle Id With Invalid Vehicle Id")
     public void userCantSeeTotalTripMonthlyByYearAndVehicleIdWithInvalidVehicleId() {
-        String vehicleId = "a";
+        String vehicleId = "1";
         int year = 2024;
         String endpoint = "/api/v1/stats/total/trip/monthly/"+year+"/"+vehicleId;
         String token = AuthUtils.integrationLoginAPI("testerempty", "nopass123");
@@ -52,7 +53,7 @@ public class GetTotalTripMonthlyByYearAndVehicleId {
 
         JsonPath jsonPath = response.jsonPath();
 
-        Assert.assertTrue(jsonPath.getString("message").contains("vehicle_brand is not available"));
+        Assert.assertTrue(isContainedInList(jsonPath.get("message.id"), "The id field must be 36 characters."));
 
         // Get Item Holder
         Assert.assertNull(jsonPath.get("data"));

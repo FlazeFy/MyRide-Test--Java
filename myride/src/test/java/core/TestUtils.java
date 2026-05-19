@@ -249,4 +249,12 @@ public class TestUtils {
 
         return response;
     }
+
+    public static boolean isContainedInList(ArrayList<String> listMessage, String target) {
+        for (int i = 0; i < listMessage.size(); i++) {
+            if (listMessage.get(i).equals(target)) return true;
+        }
+
+        return false;
+    }
 }
