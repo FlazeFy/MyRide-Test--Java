@@ -12,6 +12,7 @@
             <class name="api.stats.GetTotalTripByContext"/>
             <class name="api.stats.GetTripPartner"/>
             <class name="api.stats.GetTotalVehicleByContext"/>
+            <class name="api.stats.GetTotalTripMonthlyByYearAndVehicleId"/>
         </classes>
     </test>
     <test name="API Integration Test : History Module">
