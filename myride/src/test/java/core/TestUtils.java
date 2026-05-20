@@ -250,6 +250,40 @@ public class TestUtils {
         return response;
     }
 
+    public static void validateContain(Object data, List<String> list, String target, boolean nullable) {
+        // Convert object to list
+        List<Map<String, Object>> dataArray;
+
+        if (data instanceof List<?>) {
+            dataArray = (List<Map<String, Object>>) data;
+        } else {
+            dataArray = List.of((Map<String, Object>) data);
+        }
+
+        // Loop all data
+        for (int idx = 0; idx < dataArray.size(); idx++) {
+            Map<String, Object> item = dataArray.get(idx);
+
+            Object value = item.get(target);
+
+            // Skip if nullable
+            if (nullable && (value == null)) continue;
+
+            // Validate not null
+            if (!nullable) {
+                Assert.assertNotNull(value, "Column " + target + " should not be null. Index: " + idx);
+            }
+
+            // Validate contain
+            if (value != null) {
+                Assert.assertTrue(
+                        list.contains(value.toString()),
+                        "Column " + target + " with value = " + value + " must be in list. Index: " + idx
+                );
+            }
+        }
+    }
+
     public static boolean isContainedInList(ArrayList<String> listMessage, String target) {
         for (int i = 0; i < listMessage.size(); i++) {
             if (listMessage.get(i).equals(target)) return true;

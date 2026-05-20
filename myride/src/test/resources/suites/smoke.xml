@@ -27,6 +27,7 @@
     </test>
     <test name="API Integration Test : Fuel Module">
         <classes>
+            <class name="api.fuel.GetAllFuel"/>
             <class name="api.fuel.GetLastFuel"/>
             <class name="api.fuel.GetFuelSummary"/>
         </classes>
