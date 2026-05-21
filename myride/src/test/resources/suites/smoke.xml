@@ -37,6 +37,7 @@
             <class name="api.service.GetAllService"/>
             <class name="api.service.GetServiceSpending"/>
             <class name="api.service.GetNextService"/>
+            <class name="api.service.GetServiceByVehicleId"/>
         </classes>
     </test>
 </suite>
