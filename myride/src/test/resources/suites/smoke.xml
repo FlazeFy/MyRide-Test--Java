@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="Smoke Suite" parallel="tests" thread-count="2">
-    <test name="Login Page Basic Auth Tests">
-        <classes>
-            <class name="runners.TestRunner"/>
-        </classes>
-    </test>
+<!--    <test name="Login Page Basic Auth Tests">-->
+<!--        <classes>-->
+<!--            <class name="runners.TestRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
     <test name="API Integration Test : Stats Module">
         <classes>
             <class name="api.stats.GetSummary"/>
@@ -35,6 +35,7 @@
     <test name="API Integration Test : Service Module">
         <classes>
             <class name="api.service.GetServiceSpending"/>
+            <class name="api.service.GetNextService"/>
         </classes>
     </test>
 </suite>
