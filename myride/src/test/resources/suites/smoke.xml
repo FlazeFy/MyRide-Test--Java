@@ -34,6 +34,7 @@
     </test>
     <test name="API Integration Test : Service Module">
         <classes>
+            <class name="api.service.GetAllService"/>
             <class name="api.service.GetServiceSpending"/>
             <class name="api.service.GetNextService"/>
         </classes>
