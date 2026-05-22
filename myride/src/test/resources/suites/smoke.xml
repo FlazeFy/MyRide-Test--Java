@@ -32,6 +32,11 @@
             <class name="api.fuel.GetFuelSummary"/>
         </classes>
     </test>
+    <test name="API Integration Test : Reminder Module">
+        <classes>
+            <class name="api.reminder.GetNextReminder"/>
+        </classes>
+    </test>
     <test name="API Integration Test : Service Module">
         <classes>
             <class name="api.service.GetAllService"/>
