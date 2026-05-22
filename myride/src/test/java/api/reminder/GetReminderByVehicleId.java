@@ -13,7 +13,15 @@ import java.util.Map;
 import static core.TestUtils.templateResponseGet;
 
 public class GetReminderByVehicleId extends BaseApiTest {
-    public void validateValidResponse(Response response) {
+    @Test(description = "TC-INT-RM-009 : User Can See Reminder By Vehicle Id With Valid Data")
+    public void userCanSeeReminderByVehicleIdWithValidData() {
+        String vehicleId = "7d53371a-e363-2ad3-25fe-180dae88c062";
+
+        String endpoint = "/api/v1/reminder/vehicle/" + vehicleId;
+        String token = AuthUtils.integrationLoginAPI("flazen.edu", "nopass123");
+
+        Response response = templateResponseGet(endpoint, 200, "Reminder By Vehicle Id", token);
+
         JsonPath jsonPath = response.jsonPath();
 
         // Validate message
@@ -37,18 +45,6 @@ public class GetReminderByVehicleId extends BaseApiTest {
         );
 
         TestUtils.validateDateTime(data, columnDateTime);
-    }
-
-    @Test(description = "TC-INT-RM-009 : User Can See Reminder By Vehicle Id With Valid Data")
-    public void userCanSeeReminderByVehicleIdWithValidData() {
-        String vehicleId = "7d53371a-e363-2ad3-25fe-180dae88c062";
-
-        String endpoint = "/api/v1/reminder/vehicle/" + vehicleId;
-        String token = AuthUtils.integrationLoginAPI("flazen.edu", "nopass123");
-
-        Response response = templateResponseGet(endpoint, 200, "Reminder By Vehicle Id", token);
-
-        validateValidResponse(response);
     }
 
     @Test(description = "TC-INT-RM-010 : User Cant See Reminder By Vehicle Id With Empty Data")
