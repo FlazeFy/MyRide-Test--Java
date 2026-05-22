@@ -36,6 +36,7 @@
         <classes>
             <class name="api.reminder.GetNextReminder"/>
             <class name="api.reminder.GetRecentlyReminder"/>
+            <class name="api.reminder.GetReminderByVehicleId"/>
         </classes>
     </test>
     <test name="API Integration Test : Service Module">
