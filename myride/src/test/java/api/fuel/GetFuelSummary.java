@@ -2,7 +2,6 @@ package api.fuel;
 
 import core.AuthUtils;
 import core.TestUtils;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;

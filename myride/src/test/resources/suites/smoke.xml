@@ -20,6 +20,11 @@
             <class name="api.history.GetAllHistory"/>
         </classes>
     </test>
+    <test name="API Integration Test : Driver Module">
+        <classes>
+            <class name="api.driver.GetAllDriverName"/>
+        </classes>
+    </test>
     <test name="API Integration Test : Question Module">
         <classes>
             <class name="api.question.GetShowingFAQ"/>

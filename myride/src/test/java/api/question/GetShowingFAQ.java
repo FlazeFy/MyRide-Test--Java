@@ -37,7 +37,7 @@ public class GetShowingFAQ extends BaseApiTest {
         TestUtils.validateColumn(data, stringFields, "string", false);
     }
 
-    @Test(description = "TC-INT-QS-002 : User Cant See FAQ With Empty Data")
+    @Test(priority = 999, description = "TC-INT-QS-002 : User Cant See FAQ With Empty Data")
     public void userCantSeeFAQWithEmptyData() {
         RestAssured.baseURI = devEmptyCaseTestURL;
 
