@@ -15,6 +15,11 @@
             <class name="api.stats.GetTotalTripMonthlyByYearAndVehicleId"/>
         </classes>
     </test>
+    <test name="API Integration Test : Auth Module">
+        <classes>
+            <class name="api.auth.PostSignOut"/>
+        </classes>
+    </test>
     <test name="API Integration Test : Chat Module">
         <classes>
             <class name="api.chat.GetAllChatByType"/>

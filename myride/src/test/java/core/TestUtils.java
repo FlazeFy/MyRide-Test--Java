@@ -250,6 +250,56 @@ public class TestUtils {
         return response;
     }
 
+    public static Response templateResponsePost(String endpoint, int expectedStatusCode, String endpointName, Object payload, String token) {
+        String contentType = "application/json";
+        Response response;
+
+        if (token != null && payload != null) {
+            response = given()
+                    .contentType(contentType)
+                    .header("Authorization", "Bearer " + token)
+                    .body(payload)
+                    .when()
+                    .post(endpoint)
+                    .then()
+                    .statusCode(expectedStatusCode)
+                    .extract().response();
+        } else if (token != null) {
+            response = given()
+                    .contentType(contentType)
+                    .header("Authorization", "Bearer " + token)
+                    .when()
+                    .post(endpoint)
+                    .then()
+                    .statusCode(expectedStatusCode)
+                    .extract().response();
+        } else if (payload != null) {
+            response = given()
+                    .contentType(contentType)
+                    .body(payload)
+                    .when()
+                    .post(endpoint)
+                    .then()
+                    .statusCode(expectedStatusCode)
+                    .extract().response();
+        } else {
+            response = given()
+                    .contentType(contentType)
+                    .when()
+                    .post(endpoint)
+                    .then()
+                    .statusCode(expectedStatusCode)
+                    .extract().response();
+        }
+
+        System.out.println("==== POST : " + endpointName + " ====");
+        System.out.println("Status Code : " + response.getStatusCode());
+        System.out.println("Response : ");
+        System.out.println(response.asPrettyString());
+
+        return response;
+    }
+
     public static void validateContain(Object data, List<String> list, String target, boolean nullable) {
         // Convert object to list
         List<Map<String, Object>> dataArray;
