@@ -25,6 +25,7 @@
             <class name="api.driver.GetAllDriverName"/>
             <class name="api.driver.GetAllDriver"/>
             <class name="api.driver.GetAllDriverVehicle"/>
+            <class name="api.driver.GetAllDriverVehicleManagementList"/>
         </classes>
     </test>
     <test name="API Integration Test : Question Module">
