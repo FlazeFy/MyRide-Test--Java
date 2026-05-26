@@ -17,6 +17,7 @@
     </test>
     <test name="API Integration Test : Auth Module">
         <classes>
+            <class name="api.auth.PostLogin"/>
             <class name="api.auth.PostSignOut"/>
         </classes>
     </test>

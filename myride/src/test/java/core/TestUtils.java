@@ -334,6 +334,57 @@ public class TestUtils {
         }
     }
 
+    public static void validateMaxMin(Object data, List<Map<String, Object>> obj) {
+        List<?> dataArray = data instanceof List<?> ? (List<?>) data : List.of(data);
+
+        for (Object itemObj : dataArray) {
+            Map<String, Object> item = (Map<String, Object>) itemObj;
+
+            for (Map<String, Object> field : obj) {
+                String colName = (String) field.get("column_name");
+                String dataType = (String) field.get("data_type");
+                Integer max = field.get("max") != null ? ((Number) field.get("max")).intValue() : null;
+                Integer min = field.get("min") != null ? ((Number) field.get("min")).intValue() : null;
+
+                boolean nullable = (boolean) field.get("nullable");
+
+                String propsMsg = dataType.equals("number") ? "value" : dataType.equals("string") ? "character length" : "";
+
+                Object value = item.get(colName);
+                if (!nullable || value != null) {
+                    Integer dataLength = null;
+
+                    if (dataType.equals("number")) {
+                        dataLength = ((Number) value).intValue();
+                    } else if (dataType.equals("string")) {
+                        dataLength = value.toString().length();
+                    }
+
+                    if (max != null && min != null && max.equals(min)) {
+                        Assert.assertEquals(
+                                dataLength.intValue(),
+                                max.intValue(),
+                                "Column " + colName + " " + propsMsg + " must equal to " + max
+                        );
+                    } else {
+                        if (max != null) {
+                            Assert.assertTrue(
+                                    dataLength <= max,
+                                    "Column " + colName + " must have " + propsMsg + " less than or equal to " + max
+                            );
+                        }
+                        if (min != null) {
+                            Assert.assertTrue(
+                                    dataLength >= min,
+                                    "Column " + colName + " must have " + propsMsg + " more than or equal to " + min
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public static boolean isContainedInList(ArrayList<String> listMessage, String target) {
         for (int i = 0; i < listMessage.size(); i++) {
             if (listMessage.get(i).equals(target)) return true;
